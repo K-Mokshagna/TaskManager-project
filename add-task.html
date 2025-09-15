@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Task</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body onload="loadDarkMode()">
+  <nav>
+    <div class="nav-left">
+      <a href="index.html">Dashboard</a>
+      <a href="add-task.html">Add Task</a>
+      <a href="view-tasks.html">View Tasks</a>
+      <a href="reminders.html">Reminders</a>
+      <a href="settings.html">Settings</a>
+    </div>
+    <div class="nav-right">
+      <span class="brand" onclick="location.href='index.html'">TaskManager</span>
+    </div>
+  </nav>
+
+  <div class="form-card">
+    <h1>➕ Add a New Task</h1>
+    
+    <div class="form-group">
+      <label for="taskName">Task Name</label>
+      <input type="text" id="taskName" placeholder="Enter task name">
+    </div>
+
+    <div class="form-group">
+      <label for="taskDesc">Description</label>
+      <textarea id="taskDesc" placeholder="Enter task details"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="taskDate">Due Date</label>
+      <input type="date" id="taskDate">
+    </div>
+
+    <div class="form-group">
+      <label for="taskPriority">Priority</label>
+      <select id="taskPriority">
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+    </div>
+
+    <button class="btn" onclick="saveNewTask()">Add Task</button>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    function saveNewTask() {
+      const name = document.getElementById("taskName").value.trim();
+      const desc = document.getElementById("taskDesc").value.trim();
+      const date = document.getElementById("taskDate").value;
+      const priority = document.getElementById("taskPriority").value;
+
+      if(name === "") { alert("Task name required"); return; }
+
+      addTask({name, desc, date, priority, completed:false});
+      alert("✅ Task Added Successfully!");
+      
+      document.getElementById("taskName").value="";
+      document.getElementById("taskDesc").value="";
+      document.getElementById("taskDate").value="";
+      document.getElementById("taskPriority").value="Low";
+    }
+  </script>
+</body>
+</html>

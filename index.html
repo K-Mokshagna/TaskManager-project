@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Task Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body onload="loadDashboard(); loadDarkMode();">
+  <nav>
+    <div class="nav-left">
+      <a href="index.html">Dashboard</a>
+      <a href="add-task.html">Add Task</a>
+      <a href="view-tasks.html">View Tasks</a>
+      <a href="reminders.html">Reminders</a>
+      <a href="settings.html">Settings</a>
+    </div>
+    <div class="nav-right">
+      <span class="brand" onclick="location.href='index.html'">TaskManager</span>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Welcome, <span id="usernameDisplay"></span>!</h1>
+    <p>Total Tasks: <span id="totalTasks">0</span></p>
+    <p>Completed Tasks: <span id="completedTasks">0</span></p>
+    <p>Pending Tasks: <span id="pendingTasks">0</span></p>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    function loadDashboard() {
+      document.getElementById("usernameDisplay").innerText = getUsername();
+      const tasks = getTasks();
+      document.getElementById("totalTasks").innerText = tasks.length;
+      document.getElementById("completedTasks").innerText = tasks.filter(t=>t.completed).length;
+      document.getElementById("pendingTasks").innerText = tasks.filter(t=>!t.completed).length;
+    }
+  </script>
+</body>
+</html>

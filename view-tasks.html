@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Tasks</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body onload="loadTasks(); loadDarkMode();">
+  <nav>
+    <div class="nav-left">
+      <a href="index.html">Dashboard</a>
+      <a href="add-task.html">Add Task</a>
+      <a href="view-tasks.html">View Tasks</a>
+      <a href="reminders.html">Reminders</a>
+      <a href="settings.html">Settings</a>
+    </div>
+    <div class="nav-right">
+      <span class="brand" onclick="location.href='index.html'">TaskManager</span>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>All Tasks</h1>
+    <ul id="taskList"></ul>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    function loadTasks() {
+      const tasks = getTasks();
+      const list = document.getElementById("taskList");
+      list.innerHTML = "";
+
+      if (tasks.length === 0) {
+        list.innerHTML = "<p>No tasks found.</p>";
+        return;
+      }
+
+      tasks.forEach((task, index) => {
+        const li = document.createElement("li");
+        li.className = task.completed ? "completed" : "";
+
+        li.innerHTML = `
+          <span><b>${task.name}</b> (Priority: ${task.priority}, Due: ${task.date || "N/A"})<br>${task.desc}</span>
+          <div>
+            <button onclick="toggleComplete(${index}); loadTasks();">${task.completed ? "Undo" : "Done"}</button>
+            <button onclick="deleteTask(${index}); loadTasks();">Delete</button>
+          </div>
+        `;
+        list.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>

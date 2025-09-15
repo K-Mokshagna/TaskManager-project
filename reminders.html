@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reminders</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body onload="loadReminders(); loadDarkMode();">
+  <nav>
+    <div class="nav-left">
+      <a href="index.html">Dashboard</a>
+      <a href="add-task.html">Add Task</a>
+      <a href="view-tasks.html">View Tasks</a>
+      <a href="reminders.html">Reminders</a>
+      <a href="settings.html">Settings</a>
+    </div>
+    <div class="nav-right">
+      <span class="brand" onclick="location.href='index.html'">TaskManager</span>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Reminders</h1>
+    <ul id="reminderList"></ul>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    function loadReminders() {
+      const tasks = getTasks();
+      const today = new Date().toISOString().split("T")[0];
+      const list = document.getElementById("reminderList");
+      list.innerHTML = "";
+
+      const dueTasks = tasks.filter(t => !t.completed && t.date && t.date <= today);
+
+      if (dueTasks.length === 0) {
+        list.innerHTML = "<p>No tasks due today or overdue.</p>";
+        return;
+      }
+
+      dueTasks.forEach(task => {
+        const li = document.createElement("li");
+        li.innerHTML = `<b>${task.name}</b> - Due: ${task.date} <br>${task.desc}`;
+        list.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>
